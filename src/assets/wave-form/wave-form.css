@@ -1,0 +1,32 @@
+.waveform {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 20px;
+}
+
+.waveform-bar {
+  width: 3px;
+  background: var(--waveform-color, #111);
+  border-radius: 2px;
+
+  animation: waveform-float 1.2s ease-in-out infinite;
+}
+
+/* stagger animation using nth-child (no JS delay needed) */
+.waveform-bar:nth-child(1) { animation-duration: 1.2s; }
+.waveform-bar:nth-child(2) { animation-duration: 1.3s; }
+.waveform-bar:nth-child(3) { animation-duration: 1.4s; }
+.waveform-bar:nth-child(4) { animation-duration: 1.3s; }
+.waveform-bar:nth-child(5) { animation-duration: 1.2s; }
+
+@keyframes waveform-float {
+  0%, 100% {
+    transform: scaleY(0.6);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scaleY(1.4);
+    opacity: 1;
+  }
+}

@@ -1,0 +1,57 @@
+.empty-state {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--space-4);
+}
+
+.empty-state-container {
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-6);
+  margin-top: 100px;
+}
+
+/* Heading */
+.empty-state-title {
+  font-size: 36px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+/* Suggestion pills container */
+.empty-state-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2);
+  max-width: 550px;
+  margin-top: -24px;
+}
+
+/* Suggestion button */
+.empty-state-chip {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border-radius: var(--radius-xl);
+  border: none;
+  background: var(--chip-bg);
+  color: var(--text-secondary);
+  font-size: 12.5px;
+  font-family: Sora, sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.empty-state-chip:hover {
+  background: var(--chip-hover);
+}

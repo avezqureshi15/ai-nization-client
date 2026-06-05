@@ -1,0 +1,38 @@
+.icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  background: transparent;
+
+  color: var(--text-muted);
+
+  cursor: pointer;
+
+  transition: background 0.2s ease, color 0.2s ease;
+
+  border-radius: var(--radius-sm);
+}
+
+/* hover state */
+.icon-btn:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+/* optional size variants */
+.icon-btn--sm {
+  width: 28px;
+  height: 28px;
+}
+
+.icon-btn--md {
+  width: 32px;
+  height: 32px;
+}
+
+.icon-btn--lg {
+  width: 36px;
+  height: 36px;
+}
