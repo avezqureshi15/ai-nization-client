@@ -21,7 +21,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           </div>
 
           <button
-            className="sidebar-item w-[300px] flex justify-center"
+            className="sidebar-item flex justify-end"
             onClick={() => setSidebarOpen(false)}
           >
             <Icon.DblChevron />

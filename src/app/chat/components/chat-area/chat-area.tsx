@@ -1,40 +1,47 @@
 import React from "react";
-
-
-import "./chat-area.css";
-import EmptyState from "../empty-state/empty-state";
 import UserMessage from "../../../../components/ui/user-message/user-message";
 import AIMessage from "../../../../components/ui/ai-message/ai-message";
-import { ACTION_BTNS } from "../../../../constants/constants";
-import type { ChatAreaProps } from "./chart-area.type";
+import Timeline from "../timeline/timeline";
+import type { Message } from "../../pages/chat";
+import ThinkingChip from "../thinking/thinking";
 
 
+type Props = {
+  hasStartedChat: boolean;
+  messages: Message[];
+};
 
-const ChatArea: React.FC<ChatAreaProps> = ({
-  hasStartedChat,
-  input,
-  setInput,
-  handleSend,
-}) => {
+const ChatArea: React.FC<Props> = ({ hasStartedChat, messages }) => {
+  if (!hasStartedChat) {
+    return (
+      <></>
+    );
+  }
+
   return (
-    <div className="chat-area">
-      <div className="chat-area-container">
-        {!hasStartedChat ? (
-          <EmptyState
-            input={input}
-            setInput={setInput}
-            onSend={handleSend}
-          />
-        ) : (
-          <>
-            <UserMessage text="hey dude" />
-            <AIMessage
-              thought="Thought for 2s"
-              message="Hey dude! What's good? 🚀"
-              actions={ACTION_BTNS}
-            />
-          </>
-        )}
+    <div style={{ flex: 1, overflowY: "auto", padding: "20px 0" }}>
+      <div style={{ maxWidth: "720px", margin: "0 auto", padding: "0 24px" }}>
+        {messages.map((msg) => {
+          if (!msg) return null;
+
+          if (msg.type === "timeline") {
+            return (
+              <Timeline key={msg.id} steps={msg.steps} currentStep={msg.currentStep} />
+            );
+          }
+
+          if (msg.type === "thinking") {
+            return (
+               <ThinkingChip key={msg.id} text={msg.text} />
+            );
+          }
+
+          return msg.role === "user" ? (
+            <UserMessage key={msg.id} text={msg.text} />
+          ) : (
+            <AIMessage key={msg.id} message={msg.text} />
+          );
+        })}
       </div>
     </div>
   );

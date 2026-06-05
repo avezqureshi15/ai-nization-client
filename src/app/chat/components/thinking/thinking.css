@@ -1,0 +1,55 @@
+.thinking-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 6px 12px;
+  border-radius: 999px;
+
+  background: var(--ai-thought-bg);
+  border: 1px solid var(--ai-thought-border);
+
+  color: var(--ai-thought-text);
+  font-size: 13px;
+
+  backdrop-filter: blur(8px);
+
+  animation: fadeIn 0.25s ease;
+}
+
+.thinking-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-faint);
+
+  animation: pulse 1.2s infinite ease-in-out;
+}
+
+.thinking-text {
+  white-space: nowrap;
+}
+
+/* subtle entrance */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* breathing dot */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
