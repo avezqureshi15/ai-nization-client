@@ -1,4 +1,4 @@
-import { getAIResponse } from "../../../services/ai-services";
+import { getAIResponse } from "../../../services/ai/getAIResponse";
 import { useChatStore } from "../../../store/chat.store";
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
@@ -18,7 +18,7 @@ export const processUserMessage = async (text: string, depth: number) => {
   });
 
   const response = await getAIResponse(text);
-
+  console.log("From chat enegine ",response)
   await sleep(400 + text.length * 10);
 
   if (response.type === "text") {
@@ -30,6 +30,23 @@ export const processUserMessage = async (text: string, depth: number) => {
     });
     return;
   }
+
+
+
+// this dosen't works at all because job panel is not being displayed because of this
+if (response.type === "ui_action") {
+  addMessage({
+    id: baseId + 2,
+    role: "ai",
+    content: [],
+    ui_action: {
+      type: response.action,
+      payload: response.payload,
+    },
+  });
+
+  return;
+}
 
   if (response.type === "stream") {
     const id = baseId + 2;

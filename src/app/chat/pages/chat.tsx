@@ -35,7 +35,7 @@ export default function Chat() {
 
 
   useEffect(() => {
-    setStarted(); // ✅ THIS WAS MISSING
+    setStarted(); 
 
     start();
 

@@ -6,7 +6,7 @@ const SCRIPT = [
   "Add system design responsibility and make it more senior",
   "Also include mentoring juniors and microfrontend experience",
   "Make it little bit lengthy and quite formatted",
-  "This looks good, finalize it",
+  "This looks good, finalize it and lets publish it",
 ];
 
 type ScriptState = {

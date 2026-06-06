@@ -33,52 +33,14 @@ const ChatArea: React.FC = () => {
     }
   }, [messages, autoScroll]);
 
-  // -----------------------------
-  // Suggestions type guard
-  // -----------------------------
   const hasSuggestions = (
     msg: Message
   ): msg is AIMessage & { suggestions: Suggestion[] } => {
     return msg.role === "ai" && Array.isArray((msg as AIMessage).suggestions);
   };
 
-  // -----------------------------
-  // UI ACTION type guard
-  // -----------------------------
-  const hasUIAction = (
-    msg: Message
-  ): msg is AIMessage & {
-    ui_action: {
-      action: string;
-      payload: {
-        jobId: string;
-        role: string;
-      };
-    };
-  } => {
-    return (
-      msg.role === "ai" &&
-      (msg as AIMessage).ui_action?.type === "SHOW_JOB_PANEL"
-    );
-  };
-
-  // -----------------------------
-  // 🔥 FIX: extract markdown safely from content
-  // -----------------------------
-  const extractMarkdown = (msg: Message): string => {
-    if (msg.role !== "ai") return "";
-
-    const block = msg.content.find((b) => b.type === "markdown");
-    return block?.content ?? "";
-  };
-
-  // -----------------------------
-  // text helper
-  // -----------------------------
   const getTextFromBlock = (block: ContentBlock): string | undefined => {
-    if (block.type === "text" || block.type === "thinking") {
-      return block.text;
-    }
+    if (block.type === "text" || block.type === "thinking") return block.text;
     return undefined;
   };
 
@@ -97,17 +59,16 @@ const ChatArea: React.FC = () => {
               <UserMessage text={getTextFromBlock(msg.content[0]) ?? ""} />
             ) : (
               <span className="mb-10">
-                {/* NORMAL CONTENT */}
+                {/* NORMAL AI CONTENT */}
                 {msg.content.map((block, i) => renderBlock(block, i))}
 
-                {/* 🔥 UI ACTION: JOB PANEL */}
-                {hasUIAction(msg) && (
+                {/* 🔥 UI ACTION RENDER (NEW) */}
+                {(msg as any).ui_action?.action === "SHOW_JOB_PANEL" && (
                   <div style={{ marginTop: 16 }}>
                     <TextArea
-                      subject={`Job Posting: ${msg.ui_action.payload.role}`}
+                      subject={`Job Posting: ${(msg as any).ui_action.payload.role}`}
                       name="HR System"
-                      meta={msg.ui_action.payload.jobId}
-                      content={extractMarkdown(msg)} // ✅ FIXED (NO UI ACTION CONTENT)
+                      meta={(msg as any).ui_action.payload.jobId}
                     />
                   </div>
                 )}

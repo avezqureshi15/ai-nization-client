@@ -1,0 +1,9 @@
+export type FlowState =
+  | "INIT"
+  | "ROLE_INTRO"
+  | "ROLE_DEFINED"
+  | "SENIORITY_ADDED"
+  | "LEADERSHIP_ADDED"
+  | "FORMATTED"
+  | "READY_TO_PUBLISH"
+  | "FINALIZED";
