@@ -74,3 +74,20 @@ width: 8px;
 .suggestion-chip:hover::after {
   background: var(--chip-hover);
 }
+
+
+@keyframes chipSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.suggestion-chip {
+  animation: chipSlideIn 0.35s ease forwards;
+  opacity: 0; /* important so animation is visible */
+}
