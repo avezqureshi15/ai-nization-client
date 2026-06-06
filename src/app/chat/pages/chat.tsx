@@ -12,35 +12,35 @@ import Waveform from "../../../assets/wave-form/wave-form";
 import { processUserMessage } from "./chat-engine";
 
 import { useChatStore } from "../../../store/chat.store";
-
-const USER_SCRIPT = [
-  "We need to hire someone",
-  "Senior React Developer for product based company",
-  "Add system design responsibility and make it more senior",
-  "Also include mentoring juniors and microfrontend experience",
-  "Make it little bit lengthy and quite formatted",
-  "This looks good, finalize it",
-];
+import { useScriptStore } from "../../../store/script.store";
 
 export default function Chat() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [input, setInput] = useState("");
 
-  const { messages, hasStarted } = useChatStore();
+  const { messages, hasStarted ,setStarted} = useChatStore();
+
+  const { start, getNext } = useScriptStore();
 
   const handleSend = async (text: string, depth: number) => {
     await processUserMessage(text, depth);
+
+    // AFTER AI completes → load next scripted input
+    const nextText = getNext();
+
+    if (nextText) {
+      setInput(nextText);
+    }
   };
 
-  useEffect(() => {
-    const runScript = async () => {
-      for (let i = 0; i < USER_SCRIPT.length; i++) {
-        await new Promise((r) => setTimeout(r, 1000 + i * 150));
-        await handleSend(USER_SCRIPT[i], i);
-      }
-    };
 
-    runScript();
+  useEffect(() => {
+    setStarted(); // ✅ THIS WAS MISSING
+
+    start();
+
+    const first = getNext();
+    if (first) setInput(first);
   }, []);
 
   return (
@@ -61,6 +61,7 @@ export default function Chat() {
           Icon={Icon}
         />
 
+        {/* FULLY reactive from store */}
         <ChatArea />
 
         {hasStarted && (
@@ -70,6 +71,7 @@ export default function Chat() {
             setInput={setInput}
             onSend={() => {
               if (!input.trim()) return;
+
               handleSend(input, messages.length);
               setInput("");
             }}
