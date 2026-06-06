@@ -11,7 +11,7 @@
   font-size: 14.5px;
   line-height: 1.5;
   font-family: Sora, sans-serif;
-
+  margin-top: 1rem;
 
   padding: var(--space-3) var(--space-4);
   border-radius: var(--radius-xl);

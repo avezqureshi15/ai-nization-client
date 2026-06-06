@@ -1,0 +1,203 @@
+/* container */
+.ce-container {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-6) var(--space-4);
+}
+
+/* card (same philosophy as RequestLetter) */
+.ce-card {
+  width: 100%;
+  max-width: 660px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-subtle);
+  padding: 28px 32px;
+  transition: all 0.25s ease;
+}
+
+/* header */
+.ce-header {
+  margin-bottom: var(--space-4);
+}
+
+.ce-title {
+  font-size: 15px;
+  color: var(--text-primary);
+}
+
+/* row */
+.ce-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.ce-label {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* chip */
+.ce-chip {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 4px 10px;
+  background: var(--chip-bg);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: 13px;
+}
+
+.ce-avatar {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--avatar-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+}
+
+.ce-chip-close {
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+/* cc */
+.ce-cc {
+  margin-left: auto;
+  display: flex;
+  gap: var(--space-2);
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* input */
+.ce-input-row input {
+  width: 100%;
+  background: var(--input-bg);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  color: var(--input-text);
+  outline: none;
+  margin-bottom: 1rem;
+}
+
+.ce-input-row input::placeholder {
+  color: var(--input-placeholder);
+}
+
+.ce-input-row input:focus {
+  border-color: var(--chat-input-border-focus);
+}
+
+/* textarea */
+.ce-textarea textarea {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  resize: none;
+  line-height: 1.6;
+  font-size: 14px;
+  outline: none;
+}
+
+/* footer */
+.ce-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--space-5);
+}
+
+.ce-link-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.ce-link-btn:hover {
+  color: var(--text-primary);
+}
+
+/* actions */
+.ce-actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.ce-cancel {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.ce-cancel:hover {
+  color: var(--text-primary);
+}
+
+/* send button */
+.ce-send {
+  background: var(--cta-bg);
+  border: 1px solid var(--cta-border);
+  border-radius: var(--radius-md);
+  padding: 8px 16px;
+  color: var(--cta-text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ce-send:hover {
+  background: var(--cta-hover);
+}
+
+.ce-send.sending {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.ce-send.sent {
+  background: var(--surface-glass-hover);
+}
+
+/* toast */
+.ce-toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  padding: 10px 16px;
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: 13px;
+}
+
+/* animations */
+.fade-up {
+  animation: fadeUp 0.25s ease;
+}
+
+.fade-out {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

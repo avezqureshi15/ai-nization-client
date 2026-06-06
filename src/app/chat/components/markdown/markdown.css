@@ -1,0 +1,102 @@
+/* components/markdown/markdown.css */
+
+.md-root {
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* spacing rhythm */
+.md-root > * + * {
+  margin-top: var(--space-4);
+}
+
+/* headings */
+.md-root h1,
+.md-root h2,
+.md-root h3 {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+.md-root h1 {
+  font-size: 20px;
+}
+
+.md-root h2 {
+  font-size: 18px;
+}
+
+.md-root h3 {
+  font-size: 16px;
+  color: var(--text-secondary);
+}
+
+/* paragraph */
+.md-root p {
+  color: var(--text-secondary);
+}
+
+/* strong */
+.md-root strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* links */
+.md-root a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.md-root a:hover {
+  text-decoration: underline;
+}
+
+/* lists */
+.md-root ul,
+.md-root ol {
+  padding-left: 18px;
+  color: var(--text-secondary);
+}
+
+.md-root li {
+  margin-bottom: 6px;
+}
+
+/* inline code */
+.md-root code {
+  background: var(--surface-glass);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  color: var(--text-primary);
+}
+
+/* code block */
+.md-root pre {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+}
+
+.md-root pre code {
+  background: none;
+  padding: 0;
+}
+
+/* blockquote */
+.md-root blockquote {
+  border-left: 3px solid var(--border-subtle);
+  padding-left: var(--space-3);
+  color: var(--text-muted);
+}
+
+/* hr */
+.md-root hr {
+  border: none;
+  border-top: 1px solid var(--border-subtle);
+}
