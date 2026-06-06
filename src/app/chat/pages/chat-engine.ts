@@ -1,99 +1,61 @@
 import { getAIResponse } from "../../../services/ai-services";
-import type { Message } from "./chat.type";
+import { useChatStore } from "../../../store/chat.store";
 
-const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms));
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
-const getAIDelay = (text: string, depth: number) =>
-  Math.min(1500, 400 + text.length * 15 + depth * 120);
+export const processUserMessage = async (text: string, depth: number) => {
+  const { addMessage, updateMessage, setStarted } =
+    useChatStore.getState();
 
-export const processUserMessage = async ({
-  text,
-  depth,
-  onUpdate,
-}: {
-  text: string;
-  depth: number;
-  onUpdate: (updater: (prev: Message[]) => Message[]) => void;
-}) => {
+  setStarted();
+
   const baseId = Date.now();
 
-  // USER MESSAGE
-  const userMsg: Message = {
+  addMessage({
     id: baseId,
     role: "user",
     content: [{ type: "text", text }],
-  };
-
-  onUpdate((prev) => [...prev, userMsg]);
+  });
 
   const response = await getAIResponse(text);
-  await sleep(getAIDelay(text, depth));
 
-  /**
-   * =========================
-   * TEXT RESPONSE
-   * =========================
-   */
+  await sleep(400 + text.length * 10);
+
   if (response.type === "text") {
-    const aiMsg: Message = {
+    addMessage({
       id: baseId + 1,
       role: "ai",
       content: [{ type: "text", text: response.text }],
-      // ✅ SAFE ADDITION
       suggestions: response.suggestions,
-    } as Message;
-
-    onUpdate((prev) => [...prev, aiMsg]);
+    });
     return;
   }
 
-  /**
-   * =========================
-   * STREAM RESPONSE
-   * =========================
-   */
   if (response.type === "stream") {
-    const streamId = baseId + 2;
+    const id = baseId + 2;
 
-    let msg: Message = {
-      id: streamId,
+    addMessage({
+      id,
       role: "ai",
-      content: [
-        { type: "thinking", text: response.steps[0] },
-      ],
-      // ✅ SAFE ADDITION
+      content: [{ type: "thinking", text: response.steps[0] }],
       suggestions: response.suggestions,
-    } as Message;
+    });
 
-    onUpdate((prev) => [...prev, msg]);
-
-    // update steps
     for (let i = 1; i < response.steps.length; i++) {
       await sleep(800);
 
-      msg = {
-        ...msg,
-        content: [
-          { type: "thinking", text: response.steps[i] },
-        ],
-      };
-
-      onUpdate((prev) =>
-        prev.map((m) => (m.id === streamId ? msg : m))
-      );
+      updateMessage(id, (m) => ({
+        ...m,
+        content: [{ type: "thinking", text: response.steps[i] }],
+      }));
     }
 
     await sleep(600);
 
-    msg = {
-      ...msg,
+    updateMessage(id, (m) => ({
+      ...m,
       content: response.final,
-      // ✅ preserve suggestions even after final render
       suggestions: response.suggestions,
-    } as Message;
-
-    onUpdate((prev) =>
-      prev.map((m) => (m.id === streamId ? msg : m))
-    );
+    }));
   }
 };

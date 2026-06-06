@@ -1,16 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
+
 import UserMessage from "../../../../components/ui/user-message/user-message";
-import type { Message, AIMessage, Suggestion } from "../../pages/chat.type";
-import { renderBlock } from "./block-renderer/block-factory";
-import type { ContentBlock } from "./chart-area.type";
 import SuggestionChips from "../suggestion-chips/suggestion-chips";
 
-type Props = {
-  hasStartedChat: boolean;
-  messages: Message[];
-};
+import { renderBlock } from "./block-renderer/block-factory";
+import type { ContentBlock } from "./chart-area.type";
+import type { Message, AIMessage, Suggestion } from "../../pages/chat.type";
+import { useChatStore } from "../../../../store/chat.store";
 
-const ChatArea: React.FC<Props> = ({ hasStartedChat, messages }) => {
+
+const ChatArea: React.FC = () => {
+  const { messages, hasStarted } = useChatStore();
+
   const containerRef = useRef<HTMLDivElement | null>(null);
   const bottomRef = useRef<HTMLDivElement | null>(null);
   const [autoScroll, setAutoScroll] = useState(true);
@@ -33,19 +34,17 @@ const ChatArea: React.FC<Props> = ({ hasStartedChat, messages }) => {
   }, [messages, autoScroll]);
 
   const hasSuggestions = (
-  msg: Message
-): msg is AIMessage & { suggestions: Suggestion[] } => {
-  console.log("message ",msg)
-  return msg.role === "ai" && Array.isArray((msg as AIMessage).suggestions);
-};
+    msg: Message
+  ): msg is AIMessage & { suggestions: Suggestion[] } => {
+    return msg.role === "ai" && Array.isArray((msg as AIMessage).suggestions);
+  };
 
+  const getTextFromBlock = (block: ContentBlock): string | undefined => {
+    if (block.type === "text" || block.type === "thinking") return block.text;
+    return undefined;
+  };
 
-const getTextFromBlock = (block: ContentBlock): string | undefined => {
-  if (block.type === "text" || block.type === "thinking") return block.text;
-  return undefined;
-};
-
-  if (!hasStartedChat) return null;
+  if (!hasStarted) return null;
 
   return (
     <div
@@ -59,17 +58,20 @@ const getTextFromBlock = (block: ContentBlock): string | undefined => {
             {msg.role === "user" ? (
               <UserMessage text={getTextFromBlock(msg.content[0]) ?? ""} />
             ) : (
-              <>
-              <span className="mb-10" >
+              <span className="mb-10">
                 {msg.content.map((block, i) => renderBlock(block, i))}
 
                 {hasSuggestions(msg) && (
                   <div className="chip-row">
-                    <SuggestionChips suggestions={msg.suggestions} onClick={()=>console.log("suggestion clicked")} />
+                    <SuggestionChips
+                      suggestions={msg.suggestions}
+                      onClick={(action) => {
+                        console.log("suggestion clicked:", action);
+                      }}
+                    />
                   </div>
                 )}
-                </span>
-              </>
+              </span>
             )}
           </div>
         ))}

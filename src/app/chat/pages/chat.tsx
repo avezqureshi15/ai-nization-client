@@ -10,7 +10,8 @@ import Sidebar from "../../../components/ui/sidebar/sidebar";
 import Waveform from "../../../assets/wave-form/wave-form";
 
 import { processUserMessage } from "./chat-engine";
-import type { Message } from "./chat.type";
+
+import { useChatStore } from "../../../store/chat.store";
 
 const USER_SCRIPT = [
   "We need to hire someone",
@@ -24,17 +25,11 @@ const USER_SCRIPT = [
 export default function Chat() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [input, setInput] = useState("");
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [hasStartedChat, setHasStartedChat] = useState(false);
+
+  const { messages, hasStarted } = useChatStore();
 
   const handleSend = async (text: string, depth: number) => {
-    setHasStartedChat(true);
-
-    await processUserMessage({
-      text,
-      depth,
-      onUpdate: setMessages,
-    });
+    await processUserMessage(text, depth);
   };
 
   useEffect(() => {
@@ -66,11 +61,9 @@ export default function Chat() {
           Icon={Icon}
         />
 
-        <ChatArea
-          hasStartedChat={hasStartedChat}
-          messages={messages}
-        />
-        {hasStartedChat && (
+        <ChatArea />
+
+        {hasStarted && (
           <ChatInput
             mounted={false}
             input={input}
