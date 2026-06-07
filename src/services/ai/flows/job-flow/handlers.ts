@@ -13,10 +13,12 @@ export const intents = {
     text.includes("lengthy") || text.includes("formatted"),
 
   publish: (text: string) =>
-    text.includes("publish") ||
     text.includes("upload") ||
     text.includes("career") ||
     text.includes("post"),
+
+  publishing: (text: string) =>
+    text.includes("publish"), 
 
   finalize: (text: string) =>
     text.includes("finalize"),

@@ -6,6 +6,7 @@ import { finalResponse } from "./responses/final.response";
 import { formattingResponse } from "./responses/formatting.response";
 import { initResponses } from "./responses/init.response";
 import { leaderShipResponse } from "./responses/leadership.response";
+import { publisingResponses } from "./responses/publishing.response";
 import { publishTriggerResponse } from "./responses/publishTrigger.response";
 import { roleResponse } from "./responses/role.response";
 import { seniorityResponse } from "./responses/seniority.response";
@@ -42,8 +43,13 @@ const getResponseByState = (state: FlowState): AIResponse => {
     case "READY_TO_PUBLISH":
       return publishTriggerResponse.default();
 
+    case "PUBLISHING":
+      return publisingResponses.default();
+      
     case "FINALIZED":
       return finalResponse.default();
+    
+
   }
 };
 

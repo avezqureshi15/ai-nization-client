@@ -18,7 +18,7 @@ export default function Chat() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [input, setInput] = useState("");
 
-  const { messages, hasStarted ,setStarted} = useChatStore();
+  const { messages, hasStarted, setStarted } = useChatStore();
 
   const { start, getNext } = useScriptStore();
 
@@ -35,7 +35,7 @@ export default function Chat() {
 
 
   useEffect(() => {
-    setStarted(); 
+    setStarted();
 
     start();
 
@@ -44,42 +44,25 @@ export default function Chat() {
   }, []);
 
   return (
-    <div className="chat-root">
-      <Sidebar
-        sidebarOpen={sidebarOpen}
-        setSidebarOpen={setSidebarOpen}
-        HISTORY_TODAY={HISTORY_TODAY}
-        HISTORY_EARLIER={HISTORY_EARLIER}
-        Icon={Icon}
-      />
+    <>
+      {/* FULLY reactive from store */}
+      <ChatArea onSend={handleSend} />
 
-      <main className="chat-main">
-        <Header
+      {hasStarted && (
+        <ChatInput
           mounted={false}
-          sidebarOpen={sidebarOpen}
-          setSidebarOpen={setSidebarOpen}
+          input={input}
+          setInput={setInput}
+          onSend={() => {
+            if (!input.trim()) return;
+
+            handleSend(input, messages.length);
+            setInput("");
+          }}
           Icon={Icon}
+          Waveform={Waveform}
         />
-
-        {/* FULLY reactive from store */}
-        <ChatArea />
-
-        {hasStarted && (
-          <ChatInput
-            mounted={false}
-            input={input}
-            setInput={setInput}
-            onSend={() => {
-              if (!input.trim()) return;
-
-              handleSend(input, messages.length);
-              setInput("");
-            }}
-            Icon={Icon}
-            Waveform={Waveform}
-          />
-        )}
-      </main>
-    </div>
+      )}
+    </>
   );
 }

@@ -5,6 +5,8 @@ import SendButton from "../send-button/send-button";
 import "./chat-input.css";
 import ModeButton from "../mode-button/mode-button";
 import type { ChatInputProps, InputActionsProps } from "./chat-input.type";
+import { useMentionEngine } from "../../shared/mentions/use-mention-engine";
+import MentionPopup from "../../shared/mentions";
 
 /* ───────────────── TYPES ───────────────── */
 
@@ -41,6 +43,13 @@ const ChatInput: React.FC<ChatInputProps> = ({
   Waveform,
   onSend,
 }) => {
+  const {
+    show,
+    data,
+    activeTrigger,
+    handleChange,
+    handleSelect,
+  } = useMentionEngine();
   return (
     <div className={`cui-fade-up cui-d3${mounted ? "" : " opacity-0"}`}>
       <div className="chat-input-root">
@@ -57,10 +66,22 @@ const ChatInput: React.FC<ChatInputProps> = ({
             {/* Input */}
             <Input
               value={input}
-              onChange={setInput}
+              onChange={(val: string) => {
+                setInput(val);
+                handleChange(val, val.length); // 👈 inject here
+              }}
               onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
                 if (e.key === "Enter") onSend();
               }}
+            />
+
+            <MentionPopup
+              show={show}
+              data={data}
+              activeTrigger={activeTrigger}
+              onSelect={(item) =>
+                handleSelect(item, input, setInput)
+              }
             />
 
             {/* Right actions */}

@@ -50,37 +50,25 @@ export type AIMessage = {
 
 export type Message = UserMessage | AIMessage;
 
-type UIEvent = {
-  atStep?: number; 
-  action: string;
-  payload: any;
+
+
+
+export type AIResponse = {
+  type: "text" | "stream" | "ui_action";
+
+  // content layer
+  text?: string;
+  final?: ContentBlock[];
+
+  // streaming layer
+  steps?: string[];
+
+  // ui layer
+  action?: "SHOW_JOB_PANEL";
+  payload?: {
+    jobId: string;
+    role: string;
+  };
+
+  suggestions?: Suggestion[];
 };
-
-
-export type AIResponse =
-  | {
-      type: "text";
-      text: string;
-      suggestions?: Suggestion[];
-    }
-  | {
-      type: "stream";
-      steps: string[];
-      final: ContentBlock[];
-      suggestions?: Suggestion[];
-    }
-  | {
-      type: "ui_action";
-      action: "SHOW_JOB_PANEL";
-      payload: {
-        jobId: string;
-        role: string;
-      };
-      suggestions?: Suggestion[];
-    }
-    //  | {
-    //   type: "stream";
-    //   steps: string[];
-    //   events?: UIEvent[];   
-    //   final: ContentBlock[];
-    // };

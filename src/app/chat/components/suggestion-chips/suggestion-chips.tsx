@@ -1,23 +1,29 @@
-import "./suggestion-chips.css"
+import { useChatStore } from "../../../../store/chat.store";
+import "./suggestion-chips.css";
+
 type Suggestion = {
   label: string;
   action: string;
 };
 
+type SuggestionChipsProps = {
+  suggestions: Suggestion[];
+  onSend: (text: string,depth:number) => void | Promise<void>;
+};
+
 const SuggestionChips = ({
   suggestions,
-  onClick,
-}: {
-  suggestions: Suggestion[];
-  onClick: (action: string) => void;
-}) => {
+  onSend,
+}: SuggestionChipsProps) => {
+    const { messages} = useChatStore();
+  
   return (
     <div className="chip-row">
       {suggestions.map((s, i) => (
         <button
           key={i}
           className="suggestion-chip"
-          onClick={() => onClick(s.action)}
+          onClick={() => onSend(s.label,messages.length)}
         >
           {s.label}
         </button>

@@ -8,14 +8,19 @@ import type { ContentBlock } from "./chart-area.type";
 import type { Message, AIMessage, Suggestion } from "../../pages/chat.type";
 import { useChatStore } from "../../../../store/chat.store";
 import TextArea from "../text-area/text-area";
-
-const ChatArea: React.FC = () => {
+type ChatAreaProps = {
+  onSend: (text: string, depth: number) => Promise<void>;
+};
+const ChatArea: React.FC<ChatAreaProps> = (props:ChatAreaProps) => {
   const { messages, hasStarted } = useChatStore();
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const bottomRef = useRef<HTMLDivElement | null>(null);
   const [autoScroll, setAutoScroll] = useState(true);
 
+  // -----------------------------
+  // Scroll Handling
+  // -----------------------------
   const handleScroll = () => {
     const el = containerRef.current;
     if (!el) return;
@@ -34,52 +39,44 @@ const ChatArea: React.FC = () => {
   }, [messages, autoScroll]);
 
   // -----------------------------
-  // Suggestions type guard
+  // Type Guards
   // -----------------------------
   const hasSuggestions = (
     msg: Message
   ): msg is AIMessage & { suggestions: Suggestion[] } => {
-    return msg.role === "ai" && Array.isArray((msg as AIMessage).suggestions);
+    return msg.role === "ai" && Array.isArray(msg.suggestions);
   };
 
-  // -----------------------------
-  // UI ACTION type guard
-  // -----------------------------
   const hasUIAction = (
     msg: Message
   ): msg is AIMessage & {
     ui_action: {
-      action: string;
+      type: "SHOW_JOB_PANEL";
       payload: {
         jobId: string;
         role: string;
       };
     };
   } => {
-    return (
-      msg.role === "ai" &&
-      (msg as AIMessage).ui_action?.type === "SHOW_JOB_PANEL"
-    );
+    return msg.role === "ai" && msg.ui_action?.type === "SHOW_JOB_PANEL";
   };
 
   // -----------------------------
-  // 🔥 FIX: extract markdown safely from content
+  // Content Helpers
   // -----------------------------
   const extractMarkdown = (msg: Message): string => {
     if (msg.role !== "ai") return "";
-
     const block = msg.content.find((b) => b.type === "markdown");
     return block?.content ?? "";
   };
 
-  // -----------------------------
-  // text helper
-  // -----------------------------
-  const getTextFromBlock = (block: ContentBlock): string | undefined => {
-    if (block.type === "text" || block.type === "thinking") {
-      return block.text;
+  const extractText = (blocks: ContentBlock[]): string => {
+    for (const b of blocks) {
+      if (b.type === "text" || b.type === "thinking") {
+        return b.text;
+      }
     }
-    return undefined;
+    return "";
   };
 
   if (!hasStarted) return null;
@@ -91,42 +88,58 @@ const ChatArea: React.FC = () => {
       style={{ flex: 1, overflowY: "auto", padding: "20px 0" }}
     >
       <div style={{ maxWidth: "720px", margin: "0 auto", padding: "0 24px" }}>
-        {messages.map((msg) => (
-          <div key={msg.id}>
-            {msg.role === "user" ? (
-              <UserMessage text={getTextFromBlock(msg.content[0]) ?? ""} />
-            ) : (
-              <span className="mb-10">
-                {/* NORMAL CONTENT */}
-                {msg.content.map((block, i) => renderBlock(block, i))}
+        {messages.map((msg) => {
+          const isUI = hasUIAction(msg);
 
-                {/* 🔥 UI ACTION: JOB PANEL */}
-                {hasUIAction(msg) && (
-                  <div style={{ marginTop: 16 }}>
-                    <TextArea
-                      subject={`Job Posting: ${msg.ui_action.payload.role}`}
-                      name="HR System"
-                      meta={msg.ui_action.payload.jobId}
-                      content={extractMarkdown(msg)} // ✅ FIXED (NO UI ACTION CONTENT)
-                    />
-                  </div>
-                )}
+          // ✅ KEY FIX: filter markdown if UI action exists
+          const visibleBlocks =
+            msg.role === "ai" && isUI
+              ? msg.content.filter((b) => b.type !== "markdown")
+              : msg.content;
 
-                {/* SUGGESTIONS */}
-                {hasSuggestions(msg) && (
-                  <div className="chip-row">
-                    <SuggestionChips
-                      suggestions={msg.suggestions}
-                      onClick={(action) => {
-                        console.log("suggestion clicked:", action);
-                      }}
-                    />
-                  </div>
-                )}
-              </span>
-            )}
-          </div>
-        ))}
+          return (
+            <div key={msg.id}>
+              {msg.role === "user" ? (
+                <UserMessage text={extractText(msg.content)} />
+              ) : (
+                <div className="mb-10">
+                  {/* -----------------------------
+                      NORMAL CONTENT RENDER
+                  ----------------------------- */}
+                  {visibleBlocks.map((block, i) =>
+                    renderBlock(block, i)
+                  )}
+
+                  {/* -----------------------------
+                      UI ACTION (PURE SIDE EFFECT)
+                  ----------------------------- */}
+                  {isUI && (
+                    <div style={{ marginTop: 16 }}>
+                      <TextArea
+                        subject={`Job Posting: ${msg.ui_action.payload.role}`}
+                        name="HR System"
+                        meta={msg.ui_action.payload.jobId}
+                        content={extractMarkdown(msg)} // ONLY place markdown is used
+                      />
+                    </div>
+                  )}
+
+                  {/* -----------------------------
+                      SUGGESTIONS
+                  ----------------------------- */}
+                  {hasSuggestions(msg) && (
+                    <div className="chip-row">
+                      <SuggestionChips
+                        suggestions={msg.suggestions}
+                        onSend={props.onSend}
+                      />
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          );
+        })}
 
         <div ref={bottomRef} />
       </div>

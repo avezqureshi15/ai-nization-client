@@ -24,6 +24,7 @@ export const transitions: Record<
     return null;
   },
 
-  READY_TO_PUBLISH: () => null,
+  READY_TO_PUBLISH: () => "PUBLISHING",
+  PUBLISHING: (text) => intents.publishing(text) ? "FINALIZED" : null,
   FINALIZED: () => null,
 };

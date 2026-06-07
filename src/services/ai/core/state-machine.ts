@@ -6,4 +6,5 @@ export type FlowState =
   | "LEADERSHIP_ADDED"
   | "FORMATTED"
   | "READY_TO_PUBLISH"
+  | "PUBLISHING"
   | "FINALIZED";

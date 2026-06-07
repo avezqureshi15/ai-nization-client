@@ -1,6 +1,7 @@
 import React from "react";
 import "./sidebar.css";
 import type { SidebarProps } from "./sidebar.type";
+import { Link } from "react-router-dom";
 
 
 const Sidebar: React.FC<SidebarProps> = ({
@@ -30,13 +31,20 @@ const Sidebar: React.FC<SidebarProps> = ({
 
         {/* NAV */}
         <div className="sidebar__nav">
+          <Link to="/hiring-requests">
+          <button className="sidebar-item">
+             <span className="bx bx-home text-lg" ></span> Hiring Requests
+          </button>
+          </Link>
           <button className="sidebar-item">
             <Icon.Search /> Search
           </button>
+              <Link to="/chat">
           <button className="sidebar-item">
             <Icon.Edit /> New Chat
             <span className="sidebar-badge" />
           </button>
+              </Link>
         </div>
 
         {/* HISTORY */}

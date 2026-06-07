@@ -1,0 +1,479 @@
+
+/* =========================
+   BASE PAGE
+========================= */
+.job-page {
+  padding: 22px 26px;
+  color: var(--text-primary);
+}
+
+/* =========================
+   HEADER
+========================= */
+.job-header {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  margin-bottom: 4px;
+}
+
+.job-subtitle {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+  max-width: 640px;
+  line-height: 1.5;
+}
+
+/* =========================
+   SEGMENT NAV (CLEAN LINE STYLE)
+========================= */
+.segment-nav {
+  display: flex;
+  gap: 16px;
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 14px;
+}
+
+.segment-item {
+  position: relative;
+  padding: 8px 2px;
+
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+
+  background: transparent;
+  border: none;
+  cursor: pointer;
+
+  transition: all 0.15s ease;
+}
+
+.segment-item:hover {
+  color: var(--text-primary);
+}
+
+.segment-item.active {
+  color: var(--text-primary);
+}
+
+.segment-item.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+
+  width: 100%;
+  height: 2px;
+
+  background: var(--accent);
+  border-radius: 2px;
+
+  box-shadow: 0 0 0 1px var(--accent-glow);
+}
+
+/* =========================
+   BENTO UI (GLASS STYLE)
+========================= */
+.bento-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 10px;
+}
+
+.bento-card {
+  position: relative;
+
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-md);
+
+  padding: 12px;
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  transition: all 0.15s ease;
+}
+
+.bento-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.10);
+}
+
+.bento-card.large {
+  grid-row: span 2;
+}
+
+/* text inside bento */
+.bento-card h3 {
+  font-size: 12.5px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text-primary);
+}
+
+.bento-card p {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+/* =========================
+   ACCORDION LIST (GLASS CARDS)
+========================= */
+.accordion-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* main card */
+.accordion-card {
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-md);
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  overflow: hidden;
+  transition: all 0.15s ease;
+}
+
+.accordion-card:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.10);
+}
+
+/* header */
+.accordion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 10px 12px;
+  cursor: pointer;
+}
+
+/* name */
+.name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+/* meta */
+.meta {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* =========================
+   STATUS DOT (SOFTER + CLEAN)
+========================= */
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+
+  margin-top: 2px;
+  animation: pulse 1.8s infinite;
+  opacity: 0.9;
+}
+
+.status-dot.new {
+  background: #60a5fa;
+}
+
+.status-dot.shortlisted {
+  background: #22c55e;
+}
+
+.status-dot.reviewing {
+  background: #f59e0b;
+}
+
+.status-dot.rejected {
+  background: #ef4444;
+}
+
+.status-dot.hired {
+  background: #a78bfa;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(1.15);
+  }
+  100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+}
+
+/* =========================
+   ACCORDION BODY
+========================= */
+.accordion-body {
+  display: flex;
+  gap: 12px;
+
+  padding: 10px 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+
+  font-size: 11.5px;
+}
+
+.accordion-body a {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.accordion-body a:hover {
+  color: var(--text-primary);
+}
+
+/* =========================
+   OPTIONAL GLOBAL TWEAK (IMPORTANT)
+========================= */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+/* links row */
+.action-links {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  font-size: 11.5px;
+}
+
+.action-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.action-links a:hover {
+  color: var(--text-primary);
+}
+
+/* START SCREENING button */
+.screen-btn {
+  padding: 7px 10px;
+  font-size: 11.5px;
+
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+
+  color: var(--text-primary);
+  cursor: pointer;
+
+  backdrop-filter: blur(10px);
+  transition: all 0.15s ease;
+}
+
+.screen-btn:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* decision panel */
+.screen-panel {
+  display: flex;
+  gap: 10px;
+}
+
+/* base button */
+.btn {
+  flex: 1;
+  padding: 7px 10px;
+  font-size: 11.5px;
+
+  border-radius: 8px;
+  border: 1px solid transparent;
+
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  backdrop-filter: blur(10px);
+}
+
+/* reject (glass red) */
+.btn.reject {
+  background: rgba(239, 68, 68, 0.08);
+  border-color: rgba(239, 68, 68, 0.25);
+  color: #f87171;
+}
+
+.btn.reject:hover {
+  background: rgba(239, 68, 68, 0.12);
+}
+
+/* accept (glass green) */
+.btn.accept {
+  background: rgba(34, 197, 94, 0.08);
+  border-color: rgba(34, 197, 94, 0.25);
+  color: #4ade80;
+}
+
+.btn.accept:hover {
+  background: rgba(34, 197, 94, 0.12);
+}
+
+/* queue state */
+.queue-text {
+  font-size: 11.5px;
+  color: rgba(74, 222, 128, 0.8);
+  padding-top: 4px;
+}
+
+/* rejected state */
+.rejected-text {
+  font-size: 11.5px;
+  color: rgba(248, 113, 113, 0.8);
+  padding-top: 4px;
+}
+
+
+
+/* header layout split */
+.accordion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+}
+
+/* left clickable area */
+.header-left {
+  cursor: pointer;
+}
+
+/* right controls */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* screening button */
+.screen-btn {
+  padding: 6px 10px;
+  font-size: 11.5px;
+
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+
+  color: var(--text-primary);
+  cursor: pointer;
+
+  backdrop-filter: blur(10px);
+  transition: all 0.15s ease;
+}
+
+.screen-btn:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* action panel */
+.screen-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* status feedback line */
+.status-line {
+  font-size: 11.5px;
+  padding: 6px 12px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.status-line.success {
+  color: rgba(74, 222, 128, 0.85);
+}
+
+.status-line.error {
+  color: rgba(248, 113, 113, 0.85);
+}
+
+.accordion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-left {
+  flex: 1;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.screen-btn.compact,
+.btn.compact {
+  white-space: nowrap;
+  padding: 4px 8px;
+  font-size: 12px;
+}
+
+.job-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+
+  margin-bottom: 6px;
+}
+
+/* BACK BUTTON */
+.back-btn {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+
+  color: var(--text-primary);
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.back-btn:hover {
+  background: rgba(255,255,255,0.12);
+  transform: translateX(-2px);
+}
+
+.header-text {
+  display: flex;
+  align-items: center;
+}
