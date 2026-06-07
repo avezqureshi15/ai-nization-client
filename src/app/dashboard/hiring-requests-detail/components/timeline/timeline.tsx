@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./timeline.css";
-import AddRemarkModal from "./add-remark-modal";
-import { mockSteps } from "./mock";
+import AddRemarkModal from "../modal/add-remark-modal";
+import { mockSteps } from "../../mock";
 
 type TimelineStatus = "waiting" | "queued" | "success";
 

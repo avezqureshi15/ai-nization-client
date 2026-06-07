@@ -1,4 +1,4 @@
-import type { TimelineStep } from "./timeline";
+import type { TimelineStep } from "./components/timeline/timeline";
 
 export const mockSteps: TimelineStep[] = [
   {

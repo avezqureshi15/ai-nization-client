@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Dropdown from "../../../components/ui/dropdown/dropdown";
+import Dropdown from "../../../../../components/ui/dropdown/dropdown";
 import "./table.css";
 
 type HiringItem = {

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import "./detail.css";
 
-import JobDescription from "./job";
-import Applicants, { type Applicant } from "./applicants";
+import JobDescription from "../job-desc/job-desc";
+import Applicants, { type Applicant } from "../applicants/applicants";
 
 type Segment = "jd" | "applicants";
 

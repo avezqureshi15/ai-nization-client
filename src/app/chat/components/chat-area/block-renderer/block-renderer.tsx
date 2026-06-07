@@ -2,11 +2,11 @@
 
 import React from "react";
 import AIMessage from "../../../../../components/ui/ai-message/ai-message";
-import ThinkingChip from "../../thinking/thinking";
-import ComposeEmail from "../../compose-email/compose-email";
-import TextArea from "../../text-area/text-area";
+import ThinkingChip from "./blocks/thinking/thinking";
+import ComposeEmail from "./blocks/compose-email/compose-email";
+import TextArea from "./blocks/text-area/text-area";
 import type { CodeBlock, EmailBlock, ImageBlock, LetterBlock, MarkdownBlock, TextBlock, ThinkingBlock } from "../chart-area.type";
-import MarkdownRenderer from "../../markdown/markdown";
+import MarkdownRenderer from "./blocks/markdown/markdown";
 
 
 type RendererMap = {

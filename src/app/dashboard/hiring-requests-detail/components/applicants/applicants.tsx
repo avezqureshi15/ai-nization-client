@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ApplicantTimelineSheet from "./timeline";
+import ApplicantTimelineSheet from "../timeline/timeline";
 
 export type ApplicantStatus =
   | "new"

@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 
 import UserMessage from "../../../../components/ui/user-message/user-message";
-import SuggestionChips from "../suggestion-chips/suggestion-chips";
+import SuggestionChips from "./block-renderer/blocks/suggestion-chips/suggestion-chips";
 
 import { renderBlock } from "./block-renderer/block-factory";
 import type { ContentBlock } from "./chart-area.type";
 import type { Message, AIMessage, Suggestion } from "../../pages/chat.type";
 import { useChatStore } from "../../../../store/chat.store";
-import TextArea from "../text-area/text-area";
+import TextArea from "./block-renderer/blocks/text-area/text-area";
 type ChatAreaProps = {
   onSend: (text: string, depth: number) => Promise<void>;
 };

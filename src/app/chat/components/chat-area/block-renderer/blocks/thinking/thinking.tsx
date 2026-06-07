@@ -1,4 +1,4 @@
-import { Icon } from "../../../../components/ui/icons";
+import { Icon } from "../../../../../../../components/ui/icons";
 import "./thinking.css";
 
 type Props = {

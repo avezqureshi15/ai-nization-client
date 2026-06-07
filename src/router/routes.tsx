@@ -3,8 +3,8 @@ import Login from "../app/auth/pages/login";
 import ProtectedRoute from "./protected-route";
 import ProtectedLayout from "../layouts/protected-layouts/protected-layouts";
 import Chat from "../app/chat/pages/chat";
-import Dashboard from "../app/dashboard/pages/dashboard";
-import JobDetails from "../app/dashboard/details/pages";
+import HiringRequests from "../app/dashboard/hiring-requests/pages/hiring-requests";
+import HiringRequestDetails from "../app/dashboard/hiring-requests-detail/pages/hiring-requests-detail";
 
 
 export const router = createBrowserRouter([
@@ -26,8 +26,8 @@ export const router = createBrowserRouter([
           },
 
           { path: "/chat", element: <Chat /> },
-          { path: "/hiring-requests", element: <Dashboard /> },
-          { path: "/hiring-requests/:id", element: <JobDetails /> },
+          { path: "/hiring-requests", element: <HiringRequests /> },
+          { path: "/hiring-requests/:id", element: <HiringRequestDetails /> },
         ],
       },
     ],
